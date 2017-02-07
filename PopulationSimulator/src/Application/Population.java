@@ -16,8 +16,9 @@ public class Population {
 	}
 	
 	public static void createGenerations(ArrayList<Population> generationsList, HashMap<Integer,Creature> creaturesHash){
+		System.out.printf("Creating generation " + Globals.currentGen + "\n");
+
 		if(Globals.currentGen==0){
-			System.out.printf("Creating Generation 0 \n");
 			generationsList.add(new Population());
 			for(int j=0; j<Globals.maxCreatures;j++){
 				generationsList.get(Globals.currentGen).creaturesList.add(new Creature());
@@ -26,7 +27,6 @@ public class Population {
 			}
 		}
 		else{
-			System.out.printf("Creating generation " + Globals.currentGen + "\n");
 			currentCreature=0;
 			currentParent=0;
 			generationsList.add(new Population());
@@ -38,7 +38,6 @@ public class Population {
 			}
 			int counter =0;
 			for(int j=currentCreature; j<Globals.maxCreatures;j++){
-				System.out.println(counter);
 				generationsList.get(Globals.currentGen).creaturesList.add(generationsList.get(Globals.currentGen-1).creaturesList.get(counter));
 				counter++;
 			}

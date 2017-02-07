@@ -26,7 +26,6 @@ public class PopulationConfigControl implements Initializable, ControlledScene{
 
 	public void exit(ActionEvent event){
 		myController.setScene(MainApplication.mainMenuID);
-		clear(null);
 	}
 	
 	public void save(ActionEvent event){
