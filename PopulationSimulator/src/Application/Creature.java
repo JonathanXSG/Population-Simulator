@@ -26,6 +26,7 @@ public class Creature implements Comparable<Creature>{
 	
 	private boolean isSorted = false;
 	
+	//Method calls all the other methods to set the initial values of the genes of a Creature
 	public void genCreatures(){
 		genUid(Globals.uidCounter);
 		genLimbs(Globals.paramLimbs);
@@ -38,27 +39,36 @@ public class Creature implements Comparable<Creature>{
 		calcFitness();
 		Globals.uidCounter++;
 	}
+	//Sets the Unique Identifier
 	private void genUid(int uid){
 		this.uid =uid;
 	}
+	//Generates the min and max numbers of limbs by picking a random number with the bounds specified
 	private void genLimbs(int[] limbs){
 		this.limbs = Utilities.RandInt(limbs[0],limbs[1]);
 	}
+	//Generates the number of legs by picking a random number with the bounds specified
+	//Upper bound is found from subtracting the minimum amount of arms to the max amount of limbs
 	private void genLegs(int minLegs, int minArms){
 		this.legs = Utilities.RandInt(minLegs,(this.limbs - minArms) );
 	}
+	//Generates the number of arms by picking a random number taking into consideration how many legs it has
 	private void genArms(int minArms){
 		this.arms = Utilities.RandInt(minArms,(this.limbs - this.legs));
 	}
+	//Generates the chance that the creature has to die when it gets to a certain age
 	private void genDeathChance(int death){
 		this.deathChance = Utilities.RandInt(0, death);
 	}
+	//Generates the chance the Creature has of mutating
 	private void genMutationChance(int mutation){
 		this.mutationChance = Utilities.RandInt(0, mutation);
 	}
+	//Generates the weight of the Creature
 	private void genWeightMutltiplier(int weight){
 		this.weightMutltiplier = Utilities.RandInt(-weight, weight);
 	}
+	//Generates the value to determine how much the Creature will live
 	private void genLifespamMultiplier(int lifespam){
 		this.lifespamMultiplier = Utilities.RandInt(-lifespam,lifespam);
 	}
@@ -70,6 +80,7 @@ public class Creature implements Comparable<Creature>{
 		this.parents[0]=parent1;
 		this.parents[1]=parent2;
 	}
+	//Calculates the fitness of all the genes using functions or constants
 	private void calcFitness(){
 		limbsFit = limbs * 2.5;
 		armsFit = arms * 1.5;
@@ -82,24 +93,23 @@ public class Creature implements Comparable<Creature>{
 	}
 	
 	public void printData(){
-		System.out.println("Creature uid: " + this.uid);
-		System.out.printf("Parents: " + this.parents[0] + "  " + this.parents[1] + "\n");
-		System.out.printf("Sorted: " +this.isSorted+ " \n");
-		System.out.printf("Limbs: " + this.limbs +"     "+"Limbs Fit: "+ Utilities.Round(this.limbsFit) + " \n");
-		System.out.printf("Legs: " + this.legs +"     "+"Limbs Fit: "+ Utilities.Round(this.legsFit) + " \n");		
-		System.out.printf("Arms: " + this.arms +"     "+"Arms Fit: "+ Utilities.Round(this.armsFit) + " \n");
-		System.out.printf("Death Chance: " + Utilities.Round(this.deathChance) +"     "+"Death Chance Fit: "+ Utilities.Round(this.deathFit) + " \n");
-		System.out.printf("Mutation Chance: " + Utilities.Round(this.mutationChance) +"     "+"Mutation Chance Fit: "+ Utilities.Round(this.mutationFit )+ " \n");
-		System.out.printf("Weight Mutiplier: " + Utilities.Round(this.weightMutltiplier) +"     "+"Limbs Fit: "+ Utilities.Round(this.weightFit) + " \n");
-		System.out.printf("Lifespam Multiplier: " + Utilities.Round(this.lifespamMultiplier) +"     "+"Limbs Fit: "+ Utilities.Round(this.lifespamFit) + " \n");
-		System.out.printf("Fitness: " + Utilities.Round(this.fitness) + "\n");
+		System.out.println("Creature uid:   " + this.uid);
+		System.out.printf("%-15s %d  %d %n","Parents: ",this.parents[0],this.parents[1]);
+		System.out.printf("%-15s %b %n","Sorted: ",this.isSorted);
+		System.out.printf("%-15s %-10d %-15s %-10.2f %n","Limbs:",this.limbs ,"Limbs Fit:", this.limbsFit);
+		System.out.printf("%-15s %-10d %-15s %-10.2f %n","Legs:" ,this.legs  ,"Limbs Fit:", this.legsFit);		
+		System.out.printf("%-15s %-10d %-15s %-10.2f %n","Arms:" ,this.arms  ,"Arms Fit:",  this.armsFit);
+		System.out.printf("%-25s %-10d %-25s %-10.2f %n","Death Chance:" , this.deathChance, "Death Chance Fit:", this.deathFit);
+		System.out.printf("%-25s %-10d %-25s %-10.2f %n","Mutation Chance:" ,this.mutationChance, "Mutation Chance Fit:", this.mutationFit);
+		System.out.printf("%-25s %-10d %-25s %-10.2f %n","Weight Mutiplier:" , this.weightMutltiplier, "Limbs Fit:", this.weightFit);
+		System.out.printf("%-25s %-10d %-25s %-10.2f %n","Lifespam Multiplier:" , this.lifespamMultiplier, "Limbs Fit:", this.lifespamFit);
+		System.out.printf("%-15s %-10.2f %n","Fitness: " , this.fitness);
 	}
 	public void printShortData(){
-		System.out.print("Creature uid: " + this.uid + "   ");
-		System.out.printf("Sorted " +this.isSorted+ "   ");
-		System.out.printf("Parent1 " +this.parents[0]+ "   ");
-		System.out.printf("Parent2 " +this.parents[1]+ "   ");
-		System.out.printf("Fitness: " + Utilities.Round(this.fitness) + "\n");
+		System.out.println("Creature uid:   " + this.uid);
+		System.out.printf("%-15s %d  %d %n","Parents: ",this.parents[0],this.parents[1]);
+		System.out.printf("%-15s %b %n","Sorted: ",this.isSorted);
+		System.out.printf("%-15s %-10.2f %n","Fitness: " , this.fitness);
 	}
 
 	public int getUid(){
@@ -122,52 +132,69 @@ public class Creature implements Comparable<Creature>{
 		genes[6] = this.lifespamMultiplier;
 		return genes;
 	}
-	
+	//Allows for copying genes from any Creature to another
 	private void copyGenes(Creature parentCreature, int min,int max){
 		for(int i=min;i<max;i++){
 			switch(i){
-			case 0: this.limbs=parentCreature.getGenes()[0];
-			case 1: this.legs=parentCreature.getGenes()[1];
-			case 2: this.arms=parentCreature.getGenes()[2];
-			case 3: this.deathChance=parentCreature.getGenes()[3];
-			case 4: this.mutationChance=parentCreature.getGenes()[4];
-			case 5: this.weightMutltiplier=parentCreature.getGenes()[5];
-			case 6: this.lifespamMultiplier=parentCreature.getGenes()[6];
+			case 0: this.limbs=parentCreature.getGenes()[0];	break;
+			case 1: this.legs=parentCreature.getGenes()[1];	break;
+			case 2: this.arms=parentCreature.getGenes()[2];	break;
+			case 3: this.deathChance=parentCreature.getGenes()[3];	break;
+			case 4: this.mutationChance=parentCreature.getGenes()[4];	break;
+			case 5: this.weightMutltiplier=parentCreature.getGenes()[5];	break;
+			case 6: this.lifespamMultiplier=parentCreature.getGenes()[6];	break;
 			}
 		}
 	}
-	
+	//Method for mutating genes. It's called when entering a new Generation 
 	private void mutate(){
 		double randMutation = Utilities.RandDouble(0.0, 1.0);
-		if(randMutation<this.mutationChance){
-			int gene = Utilities.RandInt(1, 7);
-			switch(gene){
-				case 1:genLimbs(Globals.paramLimbs);
-				case 2:genLegs(Globals.minLegs,Globals.minArms);
-				case 3:genArms(Globals.minArms);
-				case 4:genDeathChance(Globals.maxDeathChance);
-				case 5:genMutationChance(Globals.maxMutationChance);
-				case 6:genLifespamMultiplier(Globals.lifespamMultiplier);
-				case 7:genWeightMutltiplier(Globals.weightMultiplier);
+		int numOfMutations = Utilities.RandInt(1, 2);
+		for(int i=0; i<numOfMutations;i++){
+			if(randMutation<this.mutationChance){
+				//A random int is created to choose which gene will Mutate
+				int gene = Utilities.RandInt(1, 7);
+				switch(gene){
+					case 1:genLimbs(Globals.paramLimbs);	break;
+					case 2:genLegs(Globals.minLegs,Globals.minArms);	break;
+					case 3:genArms(Globals.minArms);	break;
+					case 4:genDeathChance(Globals.maxDeathChance);	break;
+					case 5:genMutationChance(Globals.maxMutationChance);	break;
+					case 6:genLifespamMultiplier(Globals.lifespamMultiplier);	break;
+					case 7:genWeightMutltiplier(Globals.weightMultiplier);	break;
+				}
 			}
 		}
 	}
-	
+	//The Crossover is for assigning genes from the parents to the child
 	public void crossover(HashMap<Integer,Creature> creaturesHash, int gen){
+		//Random numbers are created to select in how many part the gene pool will be divided over the parents
 		int divisions= Utilities.RandInt(1, 2);
 		int selection= Utilities.RandInt(1, 2);
-		int divisionLine =  Utilities.RandInt(this.genes/4, this.genes - this.genes/4);
+		int divisionLine;
+		//Creates a reference to the parents using the Creatures HashMap
 		Creature parentCreature1 = creaturesHash.get(this.parents[0]);
 		Creature parentCreature2 = creaturesHash.get(this.parents[1]);
-		if(divisions ==1){
-			if(Utilities.RandInt(1, 2)==1){
-				this.copyGenes(parentCreature1, 0, divisionLine);
-				this.copyGenes(parentCreature2, divisionLine, this.genes);
-			}
-			else{
-				this.copyGenes(parentCreature2, 0, divisionLine);
-				this.copyGenes(parentCreature1, divisionLine, this.genes);
-			}
+		
+		//The order of crossover is chosen from random number 
+		divisionLine:
+		if(Utilities.RandInt(1, 2)==1){
+			divisionLine =  Utilities.RandInt(this.genes/4, this.genes - this.genes/4);
+			this.copyGenes(parentCreature1, 0, divisionLine);
+			this.copyGenes(parentCreature2, divisionLine, this.genes);
+//			if(divisions==2){
+//				divisions--;
+//				break divisionLine;
+//			}
+		}
+		else{
+			divisionLine =  Utilities.RandInt(this.genes/4, this.genes - this.genes/4);
+			this.copyGenes(parentCreature2, 0, divisionLine);
+			this.copyGenes(parentCreature1, divisionLine, this.genes);
+//			if(divisions==2){
+//				divisions--;
+//				break divisionLine;
+//			}
 		}
 		genUid(Globals.uidCounter);
 		calcFitness();

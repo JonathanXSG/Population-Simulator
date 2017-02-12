@@ -7,7 +7,7 @@ import java.util.ResourceBundle;
 
 import Application.Creature;
 import Application.Globals;
-import Application.Population;
+import Application.Generation;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -21,9 +21,10 @@ public class PopulationGenControl implements Initializable, ControlledScene{
 	int c = 0;
 	public void generate(ActionEvent event)
 	{
-		Population.createGenerations(Globals.generationsList, Globals.creaturesHash);
+		Generation.createGenerations(Globals.generationsList, Globals.creaturesHashMap, Globals.currentGen);
 		CurrentGeneration.setText(String.valueOf(c));
-		this.c++;
+		Globals.generationsList.get(c).printGeneration(c,false);
+		c++;
 	}
 	
 	public void generateMultiple(ActionEvent event){
@@ -44,8 +45,8 @@ public class PopulationGenControl implements Initializable, ControlledScene{
 	}
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		Globals.generationsList = new ArrayList <Population>();
-		Globals.creaturesHash = new HashMap<Integer,Creature>();
+		Globals.generationsList = new ArrayList <Generation>();
+		Globals.creaturesHashMap = new HashMap<Integer,Creature>();
 	
 	} 
 	

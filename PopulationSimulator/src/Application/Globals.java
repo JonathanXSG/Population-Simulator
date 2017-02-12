@@ -17,9 +17,9 @@ public class Globals {
 	public static int weightMultiplier ;
 	public static int lifespamMultiplier = 1;
 
-	public static ArrayList<Population> generationsList;
+	public static ArrayList<Generation> generationsList;
 
-	public static HashMap<Integer,Creature> creaturesHash;
+	public static HashMap<Integer,Creature> creaturesHashMap;
 	
 	public void setupDefaults() {
 		currentGen = 0;
@@ -34,8 +34,6 @@ public class Globals {
 		maxMutationChance= 5;
 		weightMultiplier= 2;
 		lifespamMultiplier= 1;
-		
-		
 		
 	}
 
