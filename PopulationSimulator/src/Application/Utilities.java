@@ -9,8 +9,11 @@ public class Utilities {
 			return min;
 		}
 		else{
-			int randNum = ThreadLocalRandom.current().nextInt(min, max+1);
-			return randNum;
+			int num =ThreadLocalRandom.current().nextInt(min, max);
+			if(num>max){
+				System.out.println("WTF JUST HAPPENED");
+			}
+			return ThreadLocalRandom.current().nextInt(min, max+1);
 		}
 	}
 	public static double RandDouble(double min, double max){
@@ -18,14 +21,12 @@ public class Utilities {
 			return min;
 		}
 		else{
-			double randNum = ThreadLocalRandom.current().nextDouble(min,max);
-			return randNum;
+			return ThreadLocalRandom.current().nextDouble(min,max);
 		}
 	}
 
 	public static double Round(double number){
-		DecimalFormat df = new DecimalFormat("#.##");     
-		number = Double.valueOf(df.format(number));
-		return number;
+		DecimalFormat df = new DecimalFormat("#.###");     
+		return Double.valueOf(df.format(number));
 	}
 }

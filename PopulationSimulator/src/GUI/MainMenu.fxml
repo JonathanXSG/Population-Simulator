@@ -3,10 +3,17 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
 <AnchorPane fx:id="MainMenuBackground" prefHeight="720.0" prefWidth="1024.0" style="-fx-background-color: lightgrey;" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.MainMenuControl">
    <children>
-      <Button fx:id="StartPopulation" layoutX="422.0" layoutY="304.0" mnemonicParsing="false" onAction="#Start" prefHeight="112.0" prefWidth="180.0" text="Start Population" />
-      <Label layoutX="493.0" layoutY="191.0" text="Label" />
+      <Button fx:id="StartPopulation" layoutX="422.0" layoutY="304.0" mnemonicParsing="false" onAction="#Start" prefHeight="112.0" prefWidth="180.0" text="Start ">
+         <font>
+            <Font size="24.0" />
+         </font></Button>
+      <Label layoutX="345.0" layoutY="173.0" text="Population Simulator">
+         <font>
+            <Font size="36.0" />
+         </font></Label>
    </children>
 </AnchorPane>

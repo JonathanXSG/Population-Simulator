@@ -3,19 +3,21 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Globals {
+	//Temporary place for variables that are used in various places
 	
-	public static int uidCounter = 0;
-	public static int currentGen = 0;
+	public static int uidCounter;
+	public static int currentGen;
 
-	public static int maxCreatures = 100;
-	public static int maxParents = 50;
+	public static int maxCreatures;
+	public static int maxParents;
 	public static int[] paramLimbs = new int[2];
 	public static int minLegs;
 	public static int minArms;
-	public static int maxDeathChance;
 	public static int maxMutationChance;
-	public static int weightMultiplier ;
-	public static int lifespamMultiplier = 1;
+	public static int weightMultiplier;
+	public static int heightMultiplier;
+	public static int maxDeathChance;
+	public static int lifespanMultiplier;
 
 	public static ArrayList<Generation> generationsList;
 
@@ -30,12 +32,10 @@ public class Globals {
 		paramLimbs[1] = 6;
 		minLegs=1;
 		minArms=1;
-		maxDeathChance= 20;
-		maxMutationChance= 5;
+		maxMutationChance= 10;
+		heightMultiplier = 2;
 		weightMultiplier= 2;
-		lifespamMultiplier= 1;
-		
+		maxDeathChance= 20;
+		lifespanMultiplier= 2;
 	}
-
-	
 }

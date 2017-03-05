@@ -23,7 +23,7 @@
         <menus>
           <Menu mnemonicParsing="false" text="File">
             <items>
-              <MenuItem mnemonicParsing="false" text="Close" />
+              <MenuItem mnemonicParsing="false" onAction="#exit" text="Exit" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Edit">
@@ -38,7 +38,7 @@
           </Menu>
         </menus>
       </MenuBar>
-      <TabPane layoutX="6.0" layoutY="37.0" prefHeight="683.0" prefWidth="1017.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+      <TabPane layoutX="6.0" layoutY="37.0" prefHeight="683.0" prefWidth="1017.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="37.0">
         <tabs>
           <Tab text="Generator">
             <content>
@@ -65,18 +65,18 @@
                             <NumberAxis side="LEFT" />
                           </yAxis>
                         </LineChart>
-                        <Button fx:id="SingleGenerationB" layoutX="61.0" layoutY="113.0" mnemonicParsing="false" onAction="#generate" text="Create 1 Generation" />
+                        <Button fx:id="singleGenerationB" layoutX="61.0" layoutY="113.0" mnemonicParsing="false" onAction="#generate" text="Create 1 Generation" />
                         <ProgressIndicator layoutX="24.0" layoutY="14.0" prefHeight="79.0" prefWidth="94.0" progress="0.0" />
-                        <Label layoutX="257.0" layoutY="113.0" prefHeight="37.0" prefWidth="198.0" text=" Create           Generations" />
-                        <TextField fx:id="MultipleGenerationsTF" layoutX="313.0" layoutY="113.0" prefHeight="37.0" prefWidth="35.0" />
-                        <Button fx:id="MultipleGenerationsB" layoutX="448.0" layoutY="113.0" mnemonicParsing="false" onAction="#generateMultiple" text="GO" />
+                        <Label layoutX="257.0" layoutY="113.0" prefHeight="37.0" prefWidth="198.0" text=" Create             Generations" />
+                        <TextField fx:id="multipleGenerationsTF" layoutX="313.0" layoutY="113.0" prefHeight="37.0" prefWidth="48.0" />
+                        <Button fx:id="multipleGenerationsB" layoutX="460.0" layoutY="113.0" mnemonicParsing="false" onAction="#generateMultiple" text="GO" />
                         <Label alignment="CENTER" layoutX="726.0" layoutY="26.0" prefHeight="37.0" prefWidth="168.0" text="Best Creature:">
                            <font>
                               <Font size="25.0" />
                            </font>
                         </Label>
                         <ListView layoutX="670.0" layoutY="63.0" prefHeight="138.0" prefWidth="281.0" />
-                        <Label fx:id="CurrentGeneration" layoutX="322.0" layoutY="14.0" prefHeight="60.0" prefWidth="161.0" text="">
+                        <Label fx:id="currentGeneration" layoutX="322.0" layoutY="14.0" prefHeight="60.0" prefWidth="161.0" text="">
                            <font>
                               <Font size="34.0" />
                            </font>
@@ -89,37 +89,238 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <ListView layoutX="14.0" layoutY="61.0" prefHeight="570.0" prefWidth="146.0" />
-                        <ListView layoutX="160.0" layoutY="61.0" prefHeight="570.0" prefWidth="146.0" />
-                        <Label layoutX="548.0" layoutY="180.0" prefHeight="37.0" prefWidth="109.0" text="UID" />
-                        <Label layoutX="548.0" layoutY="217.0" prefHeight="37.0" prefWidth="109.0" text="Age" />
-                        <Label layoutX="548.0" layoutY="254.0" prefHeight="37.0" prefWidth="109.0" text="Fitness" />
-                        <Label layoutX="799.0" layoutY="180.0" prefHeight="37.0" prefWidth="109.0" text="Parent 1 " />
-                        <Label layoutX="799.0" layoutY="217.0" prefHeight="37.0" prefWidth="109.0" text="Parent 2" />
-                        <Label layoutX="548.0" layoutY="313.0" prefHeight="37.0" prefWidth="109.0" text="Arms" />
-                        <Label layoutX="548.0" layoutY="350.0" prefHeight="37.0" prefWidth="135.0" text="Mutation Chance" />
-                        <Label layoutX="548.0" layoutY="389.0" prefHeight="37.0" prefWidth="130.0" text="Weight Multiplier" />
-                        <Label layoutX="548.0" layoutY="426.0" prefHeight="37.0" prefWidth="135.0" text="Lifespam Multiplier" />
-                        <Label layoutX="799.0" layoutY="313.0" prefHeight="37.0" prefWidth="109.0" text="Legs" />
-                        <Label layoutX="700.0" layoutY="180.0" prefHeight="37.0" prefWidth="80.0" />
-                        <Label layoutX="700.0" layoutY="217.0" prefHeight="37.0" prefWidth="80.0" />
-                        <Label layoutX="700.0" layoutY="254.0" prefHeight="37.0" prefWidth="80.0" />
-                        <Label layoutX="700.0" layoutY="313.0" prefHeight="37.0" prefWidth="80.0" />
-                        <Label layoutX="700.0" layoutY="350.0" prefHeight="37.0" prefWidth="80.0" />
-                        <Label layoutX="700.0" layoutY="389.0" prefHeight="37.0" prefWidth="80.0" />
-                        <Label layoutX="700.0" layoutY="426.0" prefHeight="37.0" prefWidth="80.0" />
-                        <Label layoutX="908.0" layoutY="180.0" prefHeight="37.0" prefWidth="80.0" />
-                        <Label layoutX="908.0" layoutY="217.0" prefHeight="37.0" prefWidth="80.0" />
-                        <Label layoutX="908.0" layoutY="313.0" prefHeight="37.0" prefWidth="80.0" />
-                        <Label layoutX="14.0" layoutY="24.0" prefHeight="37.0" prefWidth="146.0" text="Generation" />
-                        <Label layoutX="160.0" layoutY="24.0" prefHeight="37.0" prefWidth="146.0" text="Creature" />
+                        <ListView fx:id="creaturesLV" fixedCellSize="0.0" layoutX="174.0" layoutY="61.0" prefHeight="570.0" prefWidth="175.0" />
+                        <Label layoutX="485.0" layoutY="61.0" prefHeight="37.0" prefWidth="109.0" text="UID" />
+                        <Label layoutX="485.0" layoutY="99.0" prefHeight="37.0" prefWidth="109.0" text="Age" />
+                        <Label layoutX="485.0" layoutY="137.0" prefHeight="37.0" prefWidth="109.0" text="Fitness" />
+                        <Label layoutX="736.0" layoutY="61.0" prefHeight="37.0" prefWidth="109.0" text="Parent 1 " />
+                        <Label layoutX="736.0" layoutY="99.0" prefHeight="37.0" prefWidth="109.0" text="Parent 2" />
+                        <Label layoutX="485.0" layoutY="193.0" prefHeight="37.0" prefWidth="109.0" text="Limbs" />
+                        <Label layoutX="485.0" layoutY="231.0" prefHeight="37.0" prefWidth="135.0" text="Arms" />
+                        <Label layoutX="485.0" layoutY="269.0" prefHeight="37.0" prefWidth="130.0" text="Legs" />
+                        <Label layoutX="485.0" layoutY="307.0" prefHeight="37.0" prefWidth="135.0" text="Lifespan Multiplier" />
+                        <Label layoutX="736.0" layoutY="193.0" prefHeight="37.0" prefWidth="132.0" text="Mutation Chance" />
+                        <Label fx:id="uidL" alignment="CENTER" layoutX="637.0" layoutY="61.0" prefHeight="37.0" prefWidth="80.0" style="-fx-background-color: lightgrey;;">
+                           <font>
+                              <Font size="18.0" />
+                           </font></Label>
+                        <Label fx:id="ageL" alignment="CENTER" layoutX="637.0" layoutY="99.0" prefHeight="37.0" prefWidth="80.0" style="-fx-background-color: lightgrey;;">
+                           <font>
+                              <Font size="18.0" />
+                           </font></Label>
+                        <Label fx:id="fitnessL" alignment="CENTER" layoutX="637.0" layoutY="137.0" prefHeight="37.0" prefWidth="80.0" style="-fx-background-color: lightgrey;;">
+                           <font>
+                              <Font size="18.0" />
+                           </font></Label>
+                        <Label fx:id="limbsL" alignment="CENTER" layoutX="637.0" layoutY="193.0" prefHeight="37.0" prefWidth="80.0" style="-fx-background-color: lightgrey;;">
+                           <font>
+                              <Font size="18.0" />
+                           </font></Label>
+                        <Label fx:id="armsL" alignment="CENTER" layoutX="637.0" layoutY="231.0" prefHeight="37.0" prefWidth="80.0" style="-fx-background-color: lightgrey;;">
+                           <font>
+                              <Font size="18.0" />
+                           </font></Label>
+                        <Label fx:id="legsL" alignment="CENTER" layoutX="637.0" layoutY="269.0" prefHeight="37.0" prefWidth="80.0" style="-fx-background-color: lightgrey;;">
+                           <font>
+                              <Font size="18.0" />
+                           </font></Label>
+                        <Label fx:id="lifespanMultiplierL" alignment="CENTER" layoutX="637.0" layoutY="307.0" prefHeight="37.0" prefWidth="80.0" style="-fx-background-color: lightgrey;;">
+                           <font>
+                              <Font size="18.0" />
+                           </font></Label>
+                        <Label fx:id="parent1L" alignment="CENTER" layoutX="888.0" layoutY="61.0" prefHeight="37.0" prefWidth="80.0" style="-fx-background-color: lightgrey;;">
+                           <font>
+                              <Font size="18.0" />
+                           </font></Label>
+                        <Label fx:id="parent2L" alignment="CENTER" layoutX="888.0" layoutY="99.0" prefHeight="37.0" prefWidth="80.0" style="-fx-background-color: lightgrey;;">
+                           <font>
+                              <Font size="18.0" />
+                           </font></Label>
+                        <Label fx:id="mutationChanceL" alignment="CENTER" layoutX="888.0" layoutY="193.0" prefHeight="37.0" prefWidth="80.0" style="-fx-background-color: lightgrey;;">
+                           <font>
+                              <Font size="18.0" />
+                           </font></Label>
+                        <Label alignment="CENTER" layoutX="21.0" layoutY="24.0" prefHeight="37.0" prefWidth="146.0" text="Generation">
+                           <font>
+                              <Font name="System Bold" size="18.0" />
+                           </font></Label>
+                        <Label alignment="CENTER" layoutX="189.0" layoutY="24.0" prefHeight="37.0" prefWidth="146.0" text="Creature">
+                           <font>
+                              <Font name="System Bold" size="18.0" />
+                           </font></Label>
+                        <ListView fx:id="generationsLV" layoutX="14.0" layoutY="61.0" prefHeight="570.0" prefWidth="160.0" />
+                        <Label layoutX="736.0" layoutY="231.0" prefHeight="37.0" prefWidth="135.0" text="Height Multiplier" />
+                        <Label layoutX="736.0" layoutY="269.0" prefHeight="37.0" prefWidth="130.0" text="Weight Multiplier" />
+                        <Label layoutX="736.0" layoutY="307.0" prefHeight="37.0" prefWidth="135.0" text="Dead Chance" />
+                        <Label fx:id="HeightMultiplierL" alignment="CENTER" layoutX="888.0" layoutY="231.0" prefHeight="37.0" prefWidth="80.0" style="-fx-background-color: lightgrey;;">
+                           <font>
+                              <Font size="18.0" />
+                           </font></Label>
+                        <Label fx:id="weightMultiplierL" alignment="CENTER" layoutX="888.0" layoutY="269.0" prefHeight="37.0" prefWidth="80.0" style="-fx-background-color: lightgrey;;">
+                           <font>
+                              <Font size="18.0" />
+                           </font></Label>
+                        <Label fx:id="deathChanceL" alignment="CENTER" layoutX="888.0" layoutY="307.0" prefHeight="37.0" prefWidth="80.0" style="-fx-background-color: lightgrey;;">
+                           <font>
+                              <Font size="18.0" />
+                           </font></Label>
+                        <Label alignment="CENTER" layoutX="620.0" layoutY="14.0" prefHeight="37.0" prefWidth="207.0" text="Creature Information">
+                           <font>
+                              <Font name="System Bold" size="18.0" />
+                           </font>
+                        </Label>
+                        <Label alignment="CENTER" layoutX="620.0" layoutY="373.0" prefHeight="37.0" prefWidth="207.0" text="Generation Information">
+                           <font>
+                              <Font name="System Bold" size="18.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="482.0" layoutY="422.0" prefHeight="37.0" prefWidth="146.0" text="Total Creatures" />
+                        <Label layoutX="482.0" layoutY="460.0" prefHeight="37.0" prefWidth="135.0" text="Highest Fitness:" />
+                        <Label layoutX="482.0" layoutY="498.0" prefHeight="37.0" prefWidth="130.0" text="Average Fitness:" />
+                        <Label layoutX="482.0" layoutY="536.0" prefHeight="37.0" prefWidth="135.0" text="Lowest Fitness:" />
+                        <Label layoutX="733.0" layoutY="422.0" prefHeight="37.0" prefWidth="133.0" text="Is Sorted" />
+                        <Label fx:id="totalCreaturesL" alignment="CENTER" layoutX="634.0" layoutY="422.0" prefHeight="37.0" prefWidth="80.0" style="-fx-background-color: lightgrey;;">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="highestFitL" alignment="CENTER" layoutX="634.0" layoutY="460.0" prefHeight="37.0" prefWidth="80.0" style="-fx-background-color: lightgrey;;">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="averageFitL" alignment="CENTER" layoutX="634.0" layoutY="498.0" prefHeight="37.0" prefWidth="80.0" style="-fx-background-color: lightgrey;;">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="lowestFitL" alignment="CENTER" layoutX="634.0" layoutY="536.0" prefHeight="37.0" prefWidth="80.0" style="-fx-background-color: lightgrey;;">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="isSortedL" alignment="CENTER" layoutX="885.0" layoutY="422.0" prefHeight="37.0" prefWidth="80.0" style="-fx-background-color: lightgrey;;">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="733.0" layoutY="460.0" prefHeight="37.0" prefWidth="135.0" text="Best Creature" />
+                        <Label layoutX="733.0" layoutY="498.0" prefHeight="37.0" prefWidth="130.0" text="Average Creature" />
+                        <Label layoutX="733.0" layoutY="536.0" prefHeight="37.0" prefWidth="135.0" text="Worst Creature" />
+                        <Label fx:id="bestCreatureL" alignment="CENTER" layoutX="885.0" layoutY="460.0" prefHeight="37.0" prefWidth="80.0" style="-fx-background-color: lightgrey;;">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="averageCreatureL" alignment="CENTER" layoutX="885.0" layoutY="498.0" prefHeight="37.0" prefWidth="80.0" style="-fx-background-color: lightgrey;;">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="worstCreatureL" alignment="CENTER" layoutX="885.0" layoutY="536.0" prefHeight="37.0" prefWidth="80.0" style="-fx-background-color: lightgrey;;">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
                      </children></AnchorPane>
             </content>
           </Tab>
-            <Tab text="Untitled Tab">
-              <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-              </content>
+            <Tab text="Creature Lookup">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <Label layoutX="485.0" layoutY="61.0" prefHeight="37.0" prefWidth="109.0" text="UID" />
+                        <Label layoutX="485.0" layoutY="99.0" prefHeight="37.0" prefWidth="109.0" text="Age" />
+                        <Label layoutX="485.0" layoutY="137.0" prefHeight="37.0" prefWidth="109.0" text="Fitness" />
+                        <Label layoutX="736.0" layoutY="61.0" prefHeight="37.0" prefWidth="109.0" text="Parent 1 " />
+                        <Label layoutX="736.0" layoutY="99.0" prefHeight="37.0" prefWidth="109.0" text="Parent 2" />
+                        <Label layoutX="485.0" layoutY="193.0" prefHeight="37.0" prefWidth="109.0" text="Limbs" />
+                        <Label layoutX="485.0" layoutY="231.0" prefHeight="37.0" prefWidth="135.0" text="Arms" />
+                        <Label layoutX="485.0" layoutY="269.0" prefHeight="37.0" prefWidth="130.0" text="Legs" />
+                        <Label layoutX="485.0" layoutY="307.0" prefHeight="37.0" prefWidth="135.0" text="Lifespan Multiplier" />
+                        <Label layoutX="736.0" layoutY="193.0" prefHeight="37.0" prefWidth="132.0" text="Mutation Chance" />
+                        <Label fx:id="uidL1" alignment="CENTER" layoutX="637.0" layoutY="61.0" prefHeight="37.0" prefWidth="80.0" style="-fx-background-color: lightgrey;;">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="ageL1" alignment="CENTER" layoutX="637.0" layoutY="99.0" prefHeight="37.0" prefWidth="80.0" style="-fx-background-color: lightgrey;;">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="fitnessL1" alignment="CENTER" layoutX="637.0" layoutY="137.0" prefHeight="37.0" prefWidth="80.0" style="-fx-background-color: lightgrey;;">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="limbsL1" alignment="CENTER" layoutX="637.0" layoutY="193.0" prefHeight="37.0" prefWidth="80.0" style="-fx-background-color: lightgrey;;">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="armsL1" alignment="CENTER" layoutX="637.0" layoutY="231.0" prefHeight="37.0" prefWidth="80.0" style="-fx-background-color: lightgrey;;">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="legsL1" alignment="CENTER" layoutX="637.0" layoutY="269.0" prefHeight="37.0" prefWidth="80.0" style="-fx-background-color: lightgrey;;">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="lifespanMultiplierL1" alignment="CENTER" layoutX="637.0" layoutY="307.0" prefHeight="37.0" prefWidth="80.0" style="-fx-background-color: lightgrey;;">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="parent1L1" alignment="CENTER" layoutX="888.0" layoutY="61.0" prefHeight="37.0" prefWidth="80.0" style="-fx-background-color: lightgrey;;">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="parent2L1" alignment="CENTER" layoutX="888.0" layoutY="99.0" prefHeight="37.0" prefWidth="80.0" style="-fx-background-color: lightgrey;;">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="mutationChanceL1" alignment="CENTER" layoutX="888.0" layoutY="193.0" prefHeight="37.0" prefWidth="80.0" style="-fx-background-color: lightgrey;;">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                        <Label alignment="CENTER" layoutX="101.0" layoutY="24.0" prefHeight="37.0" prefWidth="146.0" text="Creature">
+                           <font>
+                              <Font name="System Bold" size="18.0" />
+                           </font>
+                        </Label>
+                        <ListView fx:id="creaturesLV" layoutX="14.0" layoutY="61.0" prefHeight="570.0" prefWidth="320.0" />
+                        <Label layoutX="736.0" layoutY="231.0" prefHeight="37.0" prefWidth="135.0" text="Height Multiplier" />
+                        <Label layoutX="736.0" layoutY="269.0" prefHeight="37.0" prefWidth="130.0" text="Weight Multiplier" />
+                        <Label layoutX="736.0" layoutY="307.0" prefHeight="37.0" prefWidth="135.0" text="Dead Chance" />
+                        <Label fx:id="HeightMultiplierL1" alignment="CENTER" layoutX="888.0" layoutY="231.0" prefHeight="37.0" prefWidth="80.0" style="-fx-background-color: lightgrey;;">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="weightMultiplierL1" alignment="CENTER" layoutX="888.0" layoutY="269.0" prefHeight="37.0" prefWidth="80.0" style="-fx-background-color: lightgrey;;">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="deathChanceL1" alignment="CENTER" layoutX="888.0" layoutY="307.0" prefHeight="37.0" prefWidth="80.0" style="-fx-background-color: lightgrey;;">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                        <Label alignment="CENTER" layoutX="620.0" layoutY="14.0" prefHeight="37.0" prefWidth="207.0" text="Creature Information">
+                           <font>
+                              <Font name="System Bold" size="18.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </AnchorPane>
+               </content>
             </Tab>
         </tabs>
       </TabPane>

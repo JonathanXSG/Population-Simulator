@@ -84,25 +84,29 @@
                               <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="25.0" prefWidth="161.0" text="Max Parents" textAlignment="CENTER" GridPane.columnIndex="3" />
                               <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="25.0" prefWidth="182.0" text="Min Limbs" textAlignment="CENTER" GridPane.rowIndex="1" />
                               <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="25.0" prefWidth="182.0" text="Min Arms" textAlignment="CENTER" GridPane.rowIndex="2" />
-                              <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="25.0" prefWidth="182.0" text="Max Death Chance" textAlignment="CENTER" GridPane.rowIndex="3" />
-                              <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="25.0" prefWidth="182.0" text="Lifespam Multiplier" textAlignment="CENTER" GridPane.rowIndex="4" />
+                              <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="25.0" prefWidth="182.0" text="Max Mutation Chance" textAlignment="CENTER" GridPane.rowIndex="3" />
+                              <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="25.0" prefWidth="182.0" text="Weight Multiplier" textAlignment="CENTER" GridPane.rowIndex="4" />
                               <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="25.0" prefWidth="182.0" text="Max Limbs" textAlignment="CENTER" GridPane.columnIndex="3" GridPane.rowIndex="1" />
                               <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="25.0" prefWidth="182.0" text="Min Legs" textAlignment="CENTER" GridPane.columnIndex="3" GridPane.rowIndex="2" />
-                              <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="25.0" prefWidth="182.0" text="Max Mutation Chance" textAlignment="CENTER" GridPane.columnIndex="3" GridPane.rowIndex="3" />
-                              <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="25.0" prefWidth="182.0" text="Weight Multiplier" textAlignment="CENTER" GridPane.columnIndex="3" GridPane.rowIndex="4" />
+                              <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="25.0" prefWidth="182.0" text="Height Multiplier" textAlignment="CENTER" GridPane.columnIndex="3" GridPane.rowIndex="3" />
+                              <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="25.0" prefWidth="182.0" text="Max Death Chance" textAlignment="CENTER" GridPane.columnIndex="3" GridPane.rowIndex="4" />
                               <TextField fx:id="minLimbsTF" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                               <TextField fx:id="minArmsTF" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                              <TextField fx:id="maxDeathChanceTF" layoutX="193.0" layoutY="182.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                              <TextField fx:id="lifespamMultiplierTF" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                              <TextField fx:id="maxMutationChanceTF" layoutX="193.0" layoutY="182.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                              <TextField fx:id="weitghMultiplierTF" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                               <TextField fx:id="maxLimbsTF" GridPane.columnIndex="4" GridPane.rowIndex="1" />
                               <TextField fx:id="minLegsTF" GridPane.columnIndex="4" GridPane.rowIndex="2" />
-                              <TextField fx:id="maxMutationChanceTF" GridPane.columnIndex="4" GridPane.rowIndex="3" />
-                              <TextField fx:id="weitghMultiplierTF" GridPane.columnIndex="4" GridPane.rowIndex="4" />
+                              <TextField fx:id="heitghMultiplierTF" GridPane.columnIndex="4" GridPane.rowIndex="3" />
+                              <TextField fx:id="maxDeathChanceTF" GridPane.columnIndex="4" GridPane.rowIndex="4" />
                               <ChoiceBox fx:id="maxCreaturesCB" prefWidth="150.0" GridPane.columnIndex="1" />
                               <ChoiceBox fx:id="maxParentsCB" prefWidth="150.0" GridPane.columnIndex="4" />
                               <Label alignment="CENTER" contentDisplay="CENTER" nodeOrientation="RIGHT_TO_LEFT" prefHeight="25.0" prefWidth="68.0" text="\%" GridPane.columnIndex="2" GridPane.rowIndex="3" />
                               <Label alignment="CENTER" contentDisplay="CENTER" nodeOrientation="RIGHT_TO_LEFT" prefHeight="25.0" prefWidth="68.0" text="\%" GridPane.columnIndex="5" GridPane.rowIndex="3" />
                               <Label alignment="CENTER" contentDisplay="CENTER" nodeOrientation="RIGHT_TO_LEFT" prefHeight="25.0" prefWidth="74.0" text="\%" GridPane.columnIndex="5" />
+                              <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="25.0" prefWidth="182.0" text="Lifespan Multiplier" textAlignment="CENTER" GridPane.rowIndex="5" />
+                              <TextField fx:id="lifespanMultiplierTF" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                              <Label alignment="CENTER" contentDisplay="CENTER" nodeOrientation="RIGHT_TO_LEFT" prefHeight="25.0" prefWidth="68.0" text="\%" GridPane.columnIndex="5" GridPane.rowIndex="4" />
+                              <Label alignment="CENTER" contentDisplay="CENTER" nodeOrientation="RIGHT_TO_LEFT" prefHeight="25.0" prefWidth="68.0" text="\%" GridPane.columnIndex="2" GridPane.rowIndex="4" />
                            </children>
                         </GridPane>
                      </children>

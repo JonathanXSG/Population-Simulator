@@ -21,7 +21,7 @@ import Application.*;
 public class PopulationConfigControl implements Initializable, ControlledScene{
 	
 	ScenesController myController;
-	ObservableList<Integer> maxCreatures = FXCollections.observableArrayList(100,200,400,600,800,1000);
+	ObservableList<Integer> maxCreatures = FXCollections.observableArrayList(25,50,100,200,400,600,800,1000);
 	ObservableList<Integer> maxParents = FXCollections.observableArrayList(25,50);
 
 	public void exit(ActionEvent event){
@@ -35,10 +35,11 @@ public class PopulationConfigControl implements Initializable, ControlledScene{
 		if (maxLimbsTF.getText() != "") {Globals.paramLimbs[1] = Integer.parseInt(maxLimbsTF.getText());}
 		if (minLegsTF.getText() != "") {Globals.minLegs = Integer.parseInt(minLegsTF.getText());}
 		if (minArmsTF.getText() != "") {Globals.minArms = Integer.parseInt(minArmsTF.getText());}
-		if (maxDeathChanceTF.getText() != "") {Globals.maxDeathChance = Integer.parseInt(maxDeathChanceTF.getText());}
 		if (maxMutationChanceTF.getText() != "") {Globals.maxMutationChance = Integer.parseInt(maxMutationChanceTF.getText());}
+		if (heitghMultiplierTF.getText() != "") {Globals.heightMultiplier = Integer.parseInt(heitghMultiplierTF.getText());}
 		if (weitghMultiplierTF.getText() != "") {Globals.weightMultiplier = Integer.parseInt(weitghMultiplierTF.getText());}
-		if (lifespamMultiplierTF.getText() != "") {Globals.lifespamMultiplier = Integer.parseInt(lifespamMultiplierTF.getText());}
+		if (maxDeathChanceTF.getText() != "") {Globals.maxDeathChance = Integer.parseInt(maxDeathChanceTF.getText());}
+		if (lifespanMultiplierTF.getText() != "") {Globals.lifespanMultiplier = Integer.parseInt(lifespanMultiplierTF.getText());}
 	}
 	
 	public void nextScene(ActionEvent event){
@@ -53,9 +54,10 @@ public class PopulationConfigControl implements Initializable, ControlledScene{
 		minLegsTF.clear();
 		minArmsTF.clear();
 		maxMutationChanceTF.clear();
+		heitghMultiplierTF.clear();
+		weitghMultiplierTF.clear();
 		maxDeathChanceTF.clear();
-		lifespamMultiplierTF.clear();
-		weitghMultiplierTF.setText("");
+		lifespanMultiplierTF.clear();
 	}
 	
 	@Override
@@ -73,9 +75,10 @@ public class PopulationConfigControl implements Initializable, ControlledScene{
 		addPropoerties(minLegsTF,0,20,2);
 		addPropoerties(minArmsTF,0,20,2);
 		addPropoerties(maxMutationChanceTF,0,100,10);
-		addPropoerties(maxDeathChanceTF,0,100,20);
-		addPropoerties(lifespamMultiplierTF,0,5,2);
+		addPropoerties(heitghMultiplierTF,0,5,2);
 		addPropoerties(weitghMultiplierTF,0,5,2);
+		addPropoerties(maxDeathChanceTF,0,100,20);
+		addPropoerties(lifespanMultiplierTF,0,5,2);
 	}
 	
 	@FXML public Button Confirm;
@@ -87,9 +90,11 @@ public class PopulationConfigControl implements Initializable, ControlledScene{
 	@FXML public TextField minLegsTF;
 	@FXML public TextField minArmsTF;
 	@FXML public TextField maxMutationChanceTF;
-	@FXML public TextField maxDeathChanceTF;
-	@FXML public TextField lifespamMultiplierTF;
+	@FXML public TextField heitghMultiplierTF;
 	@FXML public TextField weitghMultiplierTF;
+	@FXML public TextField maxDeathChanceTF;
+	@FXML public TextField lifespanMultiplierTF;
+	
 	
 	void addPropoerties(TextField tf,int minVal, int maxVal, int defaultVal){
 		tf.setText(""+defaultVal);

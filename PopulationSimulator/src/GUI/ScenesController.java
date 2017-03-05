@@ -1,7 +1,6 @@
 package GUI;
 
 import java.util.HashMap;
-
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
@@ -11,7 +10,6 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.layout.StackPane;
 import javafx.util.Duration;
 
@@ -45,9 +43,9 @@ public class ScenesController extends StackPane {
 			return false;
 		}
 	}
-	 //This method tries to displayed the screen with a predefined name.
+	//This method tries to display the screen with a predefined name.
     //First it makes sure the screen has been already loaded.  Then if there is more than
-    //one screen the new screen is been added second, and then the current screen is removed.
+    //one screen the new screen is added second, and then the current screen is removed.
     // If there isn't any screen being displayed, the new screen is just added to the root.
 	public Boolean setScene( String name){
 		if(scenes.get(name) != null){	//screen loaded
@@ -79,10 +77,9 @@ public class ScenesController extends StackPane {
             }
             return true;
         } else {
-            System.out.println("Scene hasn't been loaded!!! \n");
+            System.out.println("Scene hasn't been loaded! \n");
             return false;
         }
-		
 	}
 	
 	//This method will remove the screen with the given name from the collection of screens

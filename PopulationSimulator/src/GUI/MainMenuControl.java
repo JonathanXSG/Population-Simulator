@@ -14,8 +14,8 @@ public class MainMenuControl implements Initializable, ControlledScene {
 	ScenesController myController;
 	
 	@Override
-	public void setSceneParent(ScenesController scenParent) {
-		myController = scenParent;
+	public void setSceneParent(ScenesController sceneParent) {
+		myController = sceneParent;
 	}
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
