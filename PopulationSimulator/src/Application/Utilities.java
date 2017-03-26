@@ -9,10 +9,6 @@ public class Utilities {
 			return min;
 		}
 		else{
-			int num =ThreadLocalRandom.current().nextInt(min, max);
-			if(num>max){
-				System.out.println("WTF JUST HAPPENED");
-			}
 			return ThreadLocalRandom.current().nextInt(min, max+1);
 		}
 	}
@@ -24,9 +20,9 @@ public class Utilities {
 			return ThreadLocalRandom.current().nextDouble(min,max);
 		}
 	}
-
+	
 	public static double Round(double number){
-		DecimalFormat df = new DecimalFormat("#.###");     
+		DecimalFormat df = new DecimalFormat("#");     
 		return Double.valueOf(df.format(number));
 	}
 }

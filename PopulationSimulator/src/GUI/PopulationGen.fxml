@@ -44,12 +44,12 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <Label layoutX="137.0" layoutY="14.0" prefHeight="60.0" prefWidth="185.0" text="Generation:">
+                        <Label fx:id="currentGenerationL" layoutX="137.0" layoutY="14.0" prefHeight="60.0" prefWidth="299.0" text="Generation:">
                            <font>
                               <Font size="34.0" />
                            </font>
                         </Label>
-                        <AreaChart layoutX="24.0" layoutY="203.0" prefHeight="391.0" prefWidth="488.0">
+                        <AreaChart fx:id="generationsAC" layoutX="635.0" layoutY="220.0" prefHeight="361.0" prefWidth="375.0">
                           <xAxis>
                             <CategoryAxis side="BOTTOM" />
                           </xAxis>
@@ -57,9 +57,9 @@
                             <NumberAxis side="LEFT" />
                           </yAxis>
                         </AreaChart>
-                        <LineChart layoutX="512.0" layoutY="203.0" prefHeight="391.0" prefWidth="483.0">
+                        <LineChart fx:id="generationsLC" layoutX="16.0" layoutY="160.0" prefHeight="466.0" prefWidth="593.0">
                           <xAxis>
-                            <CategoryAxis side="BOTTOM" />
+                            <NumberAxis side="BOTTOM" />
                           </xAxis>
                           <yAxis>
                             <NumberAxis side="LEFT" />
@@ -75,12 +75,7 @@
                               <Font size="25.0" />
                            </font>
                         </Label>
-                        <ListView layoutX="670.0" layoutY="63.0" prefHeight="138.0" prefWidth="281.0" />
-                        <Label fx:id="currentGeneration" layoutX="322.0" layoutY="14.0" prefHeight="60.0" prefWidth="161.0" text="">
-                           <font>
-                              <Font size="34.0" />
-                           </font>
-                        </Label>
+                        <ListView fx:id="bestCreatureLV" layoutX="670.0" layoutY="63.0" prefHeight="138.0" prefWidth="281.0" />
                      </children>
                   </AnchorPane>
             </content>

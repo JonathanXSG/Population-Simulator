@@ -83,9 +83,9 @@ public class ScenesController extends StackPane {
 	}
 	
 	//This method will remove the screen with the given name from the collection of screens
-    public boolean unloadScreen(String name) {
+    public boolean unloadScene(String name) {
         if (scenes.remove(name) == null) {
-            System.out.println("Screen didn't exist");
+            System.out.println("Scene didn't exist");
             return false;
         } else {
             return true;

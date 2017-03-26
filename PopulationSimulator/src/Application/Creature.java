@@ -22,12 +22,12 @@ public class Creature implements Comparable<Creature>{
 	private double limbsFit ;
 	private double armsFit ;
 	private double legsFit ;
-	private double deathFit ;
-	private double mutationFit ;
-	private double weightFit ;
 	private double heightFit;
+	private double weightFit ;
+	private double deathFit ;
 	private double lifespanFit ;
-	private Object heightMutltiplier;
+	private double mutationFit ;
+	private double heightMutltiplier;
 	
 	//Method calls all the other methods to set the initial values of the genes of a Creature
 	public void genCreatures(){
@@ -61,6 +61,7 @@ public class Creature implements Comparable<Creature>{
 	private void genArms(int minArms){
 		checkLimbs();
 		this.arms = Utilities.RandInt(minArms,(this.limbs - this.legs));
+		
 	}
 	//Generates the chance the Creature has of mutating
 	private void genMutationChance(int mutation){
@@ -75,9 +76,9 @@ public class Creature implements Comparable<Creature>{
 		this.weightMutltiplier = Utilities.RandInt(-weight, weight);
 	}
 	//Generates the chance that the creature has to die when it gets to a certain age
-		private void genDeathChance(int death){
-			this.deathChance = Utilities.RandInt(0, death);
-		}
+	private void genDeathChance(int death){
+		this.deathChance = Utilities.RandInt(0, death);
+	}
 	//Generates the value to determine how much the Creature will live
 	private void genLifespanMultiplier(int lifespan){
 		this.lifespanMultiplier = Utilities.RandInt(-lifespan,lifespan);
@@ -131,10 +132,10 @@ public class Creature implements Comparable<Creature>{
 		return this.fitness;
 	}
 	public int getAge() {
-		return age;
+		return this.age;
 	}
 	public int[] getParents() {
-		return parents;
+		return this.parents;
 	}
 	public void setParents(int[] parents) {
 		this.parents = parents;
@@ -231,7 +232,10 @@ public class Creature implements Comparable<Creature>{
 	}
 	//Checks that the value of the limbs is bigger or equal than the legs and arms combined
 	private void checkLimbs(){
-		while(this.limbs<this.legs+this.arms){
+//		while(this.limbs<this.legs+this.arms){
+//			this.limbs++;
+//		}
+		while(this.limbs<this.legs + Globals.minArms){
 			this.limbs++;
 		}
 	}

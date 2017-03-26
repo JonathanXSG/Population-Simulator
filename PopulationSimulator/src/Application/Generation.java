@@ -34,7 +34,6 @@ public class Generation {
 	//Method to create a generation of creatures
 	public void createGenerations(ArrayList<Generation> generationsList, HashMap<Integer,Creature> creaturesHashMap){
 		generationNumber=Globals.currentGen;
-		System.out.printf("Creating generation " + generationNumber + "\n");
 		
 		//If it's crating the first generation 
 		if(generationNumber==0){
@@ -139,6 +138,7 @@ public class Generation {
 	//Method for using the mutate method inside the Creature class on each Creature 
 	public void mutateGeneration(Generation generation){
 		for(Creature creature : generation.creaturesList){
+			creature.addAge();
 			creature.mutate();
 		}
 	}
@@ -161,6 +161,11 @@ public class Generation {
 	}
 	
 	public double[] getFitnesss(){
+		if(this.highestFitness<0.00001){
+			calcMaxGenFitness();
+			calcMinGenFitness();
+			calcAvgGenFitness();
+		}
 		double[] fitness = {this.highestFitness,this.averageFitness,this.lowestFitness};
 		return fitness;
 	}

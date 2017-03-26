@@ -40,6 +40,10 @@ public class PopulationConfigControl implements Initializable, ControlledScene{
 		if (weitghMultiplierTF.getText() != "") {Globals.weightMultiplier = Integer.parseInt(weitghMultiplierTF.getText());}
 		if (maxDeathChanceTF.getText() != "") {Globals.maxDeathChance = Integer.parseInt(maxDeathChanceTF.getText());}
 		if (lifespanMultiplierTF.getText() != "") {Globals.lifespanMultiplier = Integer.parseInt(lifespanMultiplierTF.getText());}
+		Globals.generationsList.clear();
+		myController.unloadScene(MainApplication.PopulationGenID);
+		myController.loadScene(MainApplication.PopulationGenID, MainApplication.PopulationGenFile);
+		Globals.currentGen=0;
 	}
 	
 	public void nextScene(ActionEvent event){

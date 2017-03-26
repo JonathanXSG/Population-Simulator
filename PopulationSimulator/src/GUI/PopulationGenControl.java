@@ -1,5 +1,7 @@
 package GUI;
 
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -19,33 +21,57 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.scene.chart.AreaChart;
+import javafx.scene.chart.LineChart;
+import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.XYChart;
 
 
 public class PopulationGenControl implements Initializable, ControlledScene{
-	
 	ScenesController myController;
 	ObservableList<Creature> creaturesOL;
+	ObservableList<Creature> bestCreatureOL;
+	XYChart.Series highestSeries = new XYChart.Series();
+	XYChart.Series lowestSeries = new XYChart.Series();
+	XYChart.Series averageSeries = new XYChart.Series();
 	
+	//Generator Tab
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public void generate(ActionEvent event)
 	{
 		Globals.generationsList.add(new Generation());
 		Globals.generationsList.get(Globals.currentGen).createGenerations(Globals.generationsList, Globals.creaturesHashMap);
-		Globals.generationsList.get(Globals.currentGen).printGeneration(true);
-		currentGeneration.setText(String.valueOf(Globals.currentGen));
+		//Globals.generationsList.get(Globals.currentGen).printGeneration(true);
+		currentGenerationL.setText(Globals.generationsList.get(Globals.currentGen).toString());
 		generationsLV.getItems().add(Globals.generationsList.get(Globals.currentGen));
+		
+		highestSeries.getData().add(new XYChart.Data(Globals.currentGen,Globals.generationsList.get(Globals.currentGen).getFitnesss()[0]));
+		lowestSeries.getData().add(new XYChart.Data(Globals.currentGen,Globals.generationsList.get(Globals.currentGen).getFitnesss()[1]));
+		averageSeries.getData().add(new XYChart.Data(Globals.currentGen,Globals.generationsList.get(Globals.currentGen).getFitnesss()[2]));
+		bestCreatureLV.getItems().clear();
+		bestCreatureLV.getItems().setAll(Globals.creaturesHashMap.get(Globals.generationsList.get(Globals.currentGen).getImportantCretures()[0]));
+		
 		Globals.currentGen++;
 	}
-	
 	public void generateMultiple(ActionEvent event){
 		for(int i=0;i<Integer.parseInt(multipleGenerationsTF.getText());i++){
 			generate(event);
 		}
 	}
 	
-	public void exit(ActionEvent event){
-		myController.setScene(MainApplication.mainMenuID);
-	}
+	@FXML Label currentGenerationL;
+	@FXML Button singleGenerationB;
+	@FXML TextField multipleGenerationsTF;
+	@FXML Button multipleGenerationsB;
+	@FXML ListView<Creature> bestCreatureLV;
 	
+	NumberAxis xAxis = new NumberAxis();
+	NumberAxis yAxis = new NumberAxis();
+	@FXML LineChart<Number, Number> generationsLC = new LineChart<Number, Number>(xAxis, yAxis);
+	@FXML AreaChart<Number, Double> generationsAC; 
+	
+
+	//Generations Database tab
 	public void setGenerationInfo(Generation generation){
 		totalCreaturesL.setText(String.valueOf(Globals.maxCreatures));
 		highestFitL.setText(String.valueOf(Utilities.Round(generation.getFitnesss()[0])));
@@ -72,7 +98,6 @@ public class PopulationGenControl implements Initializable, ControlledScene{
 		deathChanceL.setText(String.valueOf(creature.getGenes()[6]));
 		lifespanMultiplierL.setText(String.valueOf(creature.getGenes()[7]));
 	}
-	
 	ChangeListener<Generation> selectedGeneration = new ChangeListener<Generation>() {
 		@Override
 		public void changed(ObservableValue<? extends Generation> observable, Generation oldValue,Generation newValue) {
@@ -84,16 +109,15 @@ public class PopulationGenControl implements Initializable, ControlledScene{
 	ChangeListener<Creature> selectedCreature = new ChangeListener<Creature>() {
 		@Override
 		public void changed(ObservableValue<? extends Creature> observable, Creature oldValue,Creature newValue) {
-			setCreatureInfo(newValue);
+			try {
+				setCreatureInfo(newValue);
+			} catch (Exception e) {
+				// TODO: handle exception
+			}
+			
 		}
 	};
 	
-	@FXML Label currentGeneration;
-	@FXML Button singleGenerationB;
-	@FXML TextField multipleGenerationsTF;
-	@FXML Button multipleGenerationsB;
-	@FXML ListView<Generation> generationsLV;
-	@FXML ListView<Creature> creaturesLV;
 	@FXML Label uidL;
 	@FXML Label ageL;
 	@FXML Label fitnessL;
@@ -116,16 +140,32 @@ public class PopulationGenControl implements Initializable, ControlledScene{
 	@FXML Label averageCreatureL;
 	@FXML Label worstCreatureL;
 	
+	//General things
+	public void exit(ActionEvent event){
+		myController.setScene(MainApplication.mainMenuID);
+	}
+	
+	@FXML ListView<Generation> generationsLV;
+	@FXML ListView<Creature> creaturesLV;
+	
 	@Override
 	public void setSceneParent(ScenesController sceneParent) {
 		myController = sceneParent;
 	}
+	
+	@SuppressWarnings("unchecked")
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		Globals.generationsList = new ArrayList <Generation>();
 		Globals.creaturesHashMap = new HashMap<Integer,Creature>();
 		generationsLV.getSelectionModel().selectedItemProperty().addListener(selectedGeneration);
 		creaturesLV.getSelectionModel().selectedItemProperty().addListener(selectedCreature);
+		highestSeries.setName("Highest Fitness");
+		lowestSeries.setName("Lowest Fitness");
+		averageSeries.setName("Average Fitness");
+		generationsLC.getData().add(highestSeries);
+		generationsLC.getData().add(lowestSeries);
+		generationsLC.getData().add(averageSeries);
 	} 
 
 	
