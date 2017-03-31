@@ -1,7 +1,5 @@
 package GUI;
 
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -31,6 +29,7 @@ public class PopulationGenControl implements Initializable, ControlledScene{
 	ScenesController myController;
 	ObservableList<Creature> creaturesOL;
 	ObservableList<Creature> bestCreatureOL;
+	
 	XYChart.Series highestSeries = new XYChart.Series();
 	XYChart.Series lowestSeries = new XYChart.Series();
 	XYChart.Series averageSeries = new XYChart.Series();
@@ -142,7 +141,7 @@ public class PopulationGenControl implements Initializable, ControlledScene{
 	
 	//General things
 	public void exit(ActionEvent event){
-		myController.setScene(MainApplication.mainMenuID);
+		myController.setScene(MainStage.mainMenuID);
 	}
 	
 	@FXML ListView<Generation> generationsLV;

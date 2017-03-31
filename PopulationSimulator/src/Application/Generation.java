@@ -52,7 +52,7 @@ public class Generation {
 			mutateGeneration(generationsList.get(generationNumber-1));
 			//SetParents method is used on the current Generation using the Creatures of the past Generation
 			setParents(generationsList.get(generationNumber-1));
-			for(int j=0; j<Globals.maxParents;j++){
+			for(int j=0; j<Globals.maxParents/2;j++){
 				//Iterates through the creatures created from mating, uses the crossover method of the Creature class and adds them on the HashMap
 				this.creaturesList.get(j).crossover(creaturesHashMap);
 				creaturesHashMap.put(generationsList.get(generationNumber).creaturesList.get(j).getUid(),generationsList.get(generationNumber).creaturesList.get(j));
@@ -129,7 +129,7 @@ public class Generation {
 		if(!this.isSorted){
 			parentGeneration.sortGeneration();
 		}
-		for(int i = 0;i<(Globals.maxParents);i++){
+		for(int i = 0;i<(Globals.maxParents/2);i++){
 			this.creaturesList.add(new Creature());
 			this.creaturesList.get(i).setParents(parentGeneration.creaturesList.get(currentParent).getUid(),parentGeneration.creaturesList.get(currentParent+1).getUid());
 			currentParent+=2;

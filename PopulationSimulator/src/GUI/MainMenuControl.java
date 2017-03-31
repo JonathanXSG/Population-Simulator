@@ -27,6 +27,6 @@ public class MainMenuControl implements Initializable, ControlledScene {
 	private AnchorPane MainMenuBackground;
 	
 	public void Start(ActionEvent event){
-		myController.setScene(MainApplication.PopulationConfigID);
+		myController.setScene(MainStage.PopulationConfigID);
 	}
 }

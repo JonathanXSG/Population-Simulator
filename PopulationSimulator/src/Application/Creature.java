@@ -61,7 +61,6 @@ public class Creature implements Comparable<Creature>{
 	private void genArms(int minArms){
 		checkLimbs();
 		this.arms = Utilities.RandInt(minArms,(this.limbs - this.legs));
-		
 	}
 	//Generates the chance the Creature has of mutating
 	private void genMutationChance(int mutation){
@@ -180,8 +179,8 @@ public class Creature implements Comparable<Creature>{
 					case 1:genLegs(Globals.minLegs,Globals.minArms);	break;
 					case 2:genArms(Globals.minArms);	break;
 					case 3:genMutationChance(Globals.maxMutationChance);	break;
-					case 4:genWeightMutltiplier(Globals.weightMultiplier);	break;
-					case 5:genWeightMutltiplier(Globals.heightMultiplier);	break;
+					case 4:genHeightMutltiplier(Globals.heightMultiplier);	break;
+					case 5:genWeightMutltiplier(Globals.weightMultiplier);	break;
 					case 6:genDeathChance(Globals.maxDeathChance);	break;
 					case 7:genLifespanMultiplier(Globals.lifespanMultiplier);	break;
 				}
