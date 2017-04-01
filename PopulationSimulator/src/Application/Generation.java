@@ -1,7 +1,12 @@
 package Application;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
+import javafx.collections.ObservableList;
+import javafx.collections.ObservableMap;
 
 /*
  This class encapsulates, manages and modifies the creatures for a generation. 
@@ -32,7 +37,7 @@ public class Generation {
 	}
 	
 	//Method to create a generation of creatures
-	public void createGenerations(ArrayList<Generation> generationsList, HashMap<Integer,Creature> creaturesHashMap){
+	public void createGenerations(ObservableList<Generation> generationsList, ObservableMap<Integer, Creature> creaturesHashMap){
 		generationNumber=Globals.currentGen;
 		
 		//If it's crating the first generation 
@@ -70,25 +75,30 @@ public class Generation {
 	
 	//Prints informations about the Generation such as: per Creature data, highest and lowest fitness, and the average
 	//It can display the full data of the Creatures or the shorter data
-	public void printGeneration(Boolean shortData){
-		System.out.printf("\n"+"==============="+"Generation "+this.generationNumber+"==============="+"\n");
+	public void printGeneration(Boolean shortData,OutputStream outWritter) throws IOException{
+		BufferedWriter buffWriter = new BufferedWriter(new OutputStreamWriter(outWritter));
+		
+		buffWriter.append(String.format("%s %d %s %n","===============Generation ",this.generationNumber, "==============="));
+		buffWriter.newLine();
+		buffWriter.flush();
 		if(shortData){
 			for(int j=0;j<Globals.maxCreatures;j++){
-				this.creaturesList.get(j).printShortData();
-				System.out.printf("\n");
+				this.creaturesList.get(j).printShortData(outWritter);
 			}
 		}
 		else{
 			for(int j=0;j<Globals.maxCreatures;j++){
-				this.creaturesList.get(j).printData();
-				System.out.printf("\n");
+				this.creaturesList.get(j).printData(outWritter);
 			}
 		}
-		System.out.printf("%-20s %b %n","Is Sorted:",this.isSorted);
-		System.out.printf("%-20s %.3f%n","Highest Fitness:",calcMaxGenFitness());
-		System.out.printf("%-20s %.3f%n","Average Fitness:",calcAvgGenFitness());
-		System.out.printf("%-20s %.3f%n","Lowest Fitness:",calcMinGenFitness());
-		System.out.printf("==============="+"Generation "+this.generationNumber+"==============="+"\n");
+		buffWriter.append(String.format("%-20s %b %n","Is Sorted:",this.isSorted));
+		buffWriter.append(String.format("%-20s %.3f %n","Highest Fitness:",calcMaxGenFitness()));
+		buffWriter.append(String.format("%-20s %.3f %n","Average Fitness:",calcAvgGenFitness()));
+		buffWriter.append(String.format("%-20s %.3f %n","Lowest Fitness:",calcMinGenFitness()));
+		buffWriter.newLine();
+		buffWriter.append(String.format("%s %d %s %n","===============Generation ",this.generationNumber, "==============="));
+		buffWriter.flush();
+		
 	}
 	
 	//Find the highest fitness Creature from the Generation

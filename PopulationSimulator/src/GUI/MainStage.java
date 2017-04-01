@@ -2,9 +2,13 @@ package GUI;
 
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.io.OutputStreamWriter;
+import java.io.PrintStream;
+
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -34,7 +38,17 @@ public class MainStage extends Application {
     	Scene scene = new Scene(root);
     	primaryStage.setScene(scene);
     	primaryStage.show();
-    	
+
+    	OutputStream output = null;
+		try {
+			output = new FileOutputStream("E:\\Users\\Jonathan\\Desktop\\text.txt");
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	PrintStream printOut = new PrintStream(output);
+
+    	//System.setErr(printOut);
     	
     }
     

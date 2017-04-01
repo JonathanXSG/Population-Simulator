@@ -2,6 +2,9 @@ package Application;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import javafx.collections.ObservableList;
+import javafx.collections.ObservableMap;
+
 public class Globals {
 	//Temporary place for variables that are used in various places
 	
@@ -19,9 +22,9 @@ public class Globals {
 	public static int maxDeathChance;
 	public static int lifespanMultiplier;
 
-	public static ArrayList<Generation> generationsList;
+	public static ObservableList<Generation> generationsList;
 
-	public static HashMap<Integer,Creature> creaturesHashMap;
+	public static ObservableMap<Integer,Creature> creaturesHashMap;
 	
 	public void setupDefaults() {
 		currentGen = 0;
