@@ -1,7 +1,15 @@
 package Application;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.util.HashMap;
 
+import javafx.collections.ObservableMap;
+
 public class Creature implements Comparable<Creature>{
+	public static BufferedWriter buffWriter;
+	
 	private int uid;
 	private int age=0;
 	private int genes = 8;
@@ -27,7 +35,8 @@ public class Creature implements Comparable<Creature>{
 	private double deathFit ;
 	private double lifespanFit ;
 	private double mutationFit ;
-	private double heightMutltiplier;
+
+	private int heightMutltiplier;
 	
 	//Method calls all the other methods to set the initial values of the genes of a Creature
 	public void genCreatures(){
@@ -103,26 +112,33 @@ public class Creature implements Comparable<Creature>{
 		fitness= limbsFit + armsFit + legsFit + deathFit+ mutationFit + weightFit + lifespanFit;
 	}
 	//Method for printing the cull data of the Creature
-	public void printData(){
-		System.out.println("Creature uid:   " + this.uid);
-		System.out.printf("%-15s %d %n","Age: ",this.age);
-		System.out.printf("%-15s %d  %d %n","Parents: ",this.parents[0],this.parents[1]);
-		System.out.printf("%-15s %-10d %-15s %-10.3f %n","Limbs:",this.limbs ,"Limbs Fit:", this.limbsFit);
-		System.out.printf("%-15s %-10d %-15s %-10.3f %n","Legs:" ,this.legs  ,"Limbs Fit:", this.legsFit);		
-		System.out.printf("%-15s %-10d %-15s %-10.3f %n","Arms:" ,this.arms  ,"Arms Fit:",  this.armsFit);
-		System.out.printf("%-25s %-10d %-25s %-10.3f %n","Mutation Chance:" ,this.mutationChance, "Mutation Chance Fit:", this.mutationFit);
-		System.out.printf("%-25s %-10d %-25s %-10.3f %n","Height Mutiplier:" , this.heightMutltiplier, "Limbs Fit:", this.heightFit);
-		System.out.printf("%-25s %-10d %-25s %-10.3f %n","Weight Mutiplier:" , this.weightMutltiplier, "Limbs Fit:", this.weightFit);
-		System.out.printf("%-25s %-10d %-25s %-10.3f %n","Death Chance:" , this.deathChance, "Death Chance Fit:", this.deathFit);
-		System.out.printf("%-25s %-10d %-25s %-10.3f %n","Lifespan Multiplier:" , this.lifespanMultiplier, "Limbs Fit:", this.lifespanFit);
-		System.out.printf("%-15s %-10.2f %n","Fitness: " , this.fitness);
+	public void printData(OutputStream outWritter) throws IOException{
+		buffWriter = new BufferedWriter(new OutputStreamWriter(outWritter));
+		buffWriter.append(String.format("%-15s %d %n","Creature Uid: ",this.uid));
+		buffWriter.append(String.format("%-15s %d %n","Age: ",this.age));
+		buffWriter.append(String.format("%-15s %d %n","Age: ", this.parents[0],this.parents[1]));
+		buffWriter.append(String.format("%-15s %-10d %-15s %-10.3f %n","Limbs:",this.limbs ,"Limbs Fit:", this.limbsFit));
+		buffWriter.append(String.format("%-15s %-10d %-15s %-10.3f %n","Legs:" ,this.legs  ,"Limbs Fit:", this.legsFit));
+		buffWriter.append(String.format("%-15s %-10d %-15s %-10.3f %n","Arms:" ,this.arms  ,"Arms Fit:",  this.armsFit));
+		buffWriter.append(String.format("%-25s %-10d %-25s %-10.3f %n","Mutation Chance:" ,this.mutationChance, "Mutation Chance Fit:", this.mutationFit));
+		buffWriter.append(String.format("%-25s %-10d %-25s %-10.3f %n","Height Mutiplier:" , this.heightMutltiplier, "Limbs Fit:", this.heightFit));
+		buffWriter.append(String.format("%-25s %-10d %-25s %-10.3f %n","Weight Mutiplier:" , this.weightMutltiplier, "Limbs Fit:", this.weightFit));
+		buffWriter.append(String.format("%-25s %-10d %-25s %-10.3f %n","Death Chance:" , this.deathChance, "Death Chance Fit:", this.deathFit));
+		buffWriter.append(String.format("%-25s %-10d %-25s %-10.3f %n","Lifespan Multiplier:" , this.lifespanMultiplier, "Limbs Fit:", this.lifespanFit));
+		buffWriter.append(String.format("%-15s %-10.3f %n","Fitness: " , this.fitness));
+		buffWriter.newLine();
+		buffWriter.flush();
 	}
 	//Method for printing a small amount of data of the Creature
-	public void printShortData(){
-		System.out.println("Creature uid:   " + this.uid);
-		System.out.printf("%-15s %d %n","Age: ",this.age);
-		System.out.printf("%-15s %d  %d %n","Parents: ",this.parents[0],this.parents[1]);
-		System.out.printf("%-15s %-10.3f %n","Fitness: " , this.fitness);
+	public void printShortData(OutputStream outWritter) throws IOException{
+		buffWriter = new BufferedWriter(new OutputStreamWriter(outWritter));
+		buffWriter.append(String.format("%-15s %d %n","Creature Uid: ",this.uid));
+		buffWriter.append(String.format("%-15s %d %n","Age: ",this.age));
+		buffWriter.append(String.format("%-15s %d %n","Age: ", this.parents[0],this.parents[1]));
+		buffWriter.append(String.format("%-15s %-10.3f %n","Fitness: " , this.fitness));
+		buffWriter.newLine();
+		buffWriter.flush();
+
 	}
 	public int getUid(){
 		return this.uid;
@@ -189,13 +205,13 @@ public class Creature implements Comparable<Creature>{
 		
 	}
 	//The Crossover is for assigning genes from the parents to the child
-	public void crossover(HashMap<Integer,Creature> creaturesHash){
+	public void crossover(ObservableMap<Integer, Creature> creaturesHashMap){
 		//Random numbers are created to select in how many parts the gene pool will be divided over the parents
 		int divisions= Utilities.RandInt(1, 2);
 		int selection= Utilities.RandInt(1, 2);
 		int divisionLine;
 		//Creates a reference to the parents using the Creatures HashMap
-		Creature[] parentCreatures = {creaturesHash.get(this.parents[0]),creaturesHash.get(this.parents[1])};
+		Creature[] parentCreatures = {creaturesHashMap.get(this.parents[0]),creaturesHashMap.get(this.parents[1])};
 		
 		//The order of crossover is chosen from random number 
 		if(divisions==1){

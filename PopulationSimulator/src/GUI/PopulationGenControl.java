@@ -1,5 +1,10 @@
 package GUI;
 
+import java.awt.event.MouseAdapter;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -11,14 +16,22 @@ import Application.Generation;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
+import javafx.collections.MapChangeListener;
 import javafx.collections.ObservableList;
+import javafx.collections.ObservableMap;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
+import javafx.stage.FileChooser;
 import javafx.scene.chart.AreaChart;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
@@ -27,34 +40,42 @@ import javafx.scene.chart.XYChart;
 
 public class PopulationGenControl implements Initializable, ControlledScene{
 	ScenesController myController;
+	ObservableList<Generation> generationsOL;
 	ObservableList<Creature> creaturesOL;
 	ObservableList<Creature> bestCreatureOL;
+	private FileChooser fileDialog = new FileChooser();
+	private File file;
+	XYChart.Series<Number,Number> highestSeries = new XYChart.Series<Number,Number> ();
+	XYChart.Series<Number,Number> lowestSeries = new XYChart.Series<Number,Number> ();
+	XYChart.Series<Number,Number> averageSeries = new XYChart.Series<Number,Number> ();
 	
-	XYChart.Series highestSeries = new XYChart.Series();
-	XYChart.Series lowestSeries = new XYChart.Series();
-	XYChart.Series averageSeries = new XYChart.Series();
-	
-	//Generator Tab
+	//------------------------------Generator Tab------------------------------
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public void generate(ActionEvent event)
 	{
 		Globals.generationsList.add(new Generation());
 		Globals.generationsList.get(Globals.currentGen).createGenerations(Globals.generationsList, Globals.creaturesHashMap);
-		//Globals.generationsList.get(Globals.currentGen).printGeneration(true);
-		currentGenerationL.setText(Globals.generationsList.get(Globals.currentGen).toString());
-		generationsLV.getItems().add(Globals.generationsList.get(Globals.currentGen));
 		
+		currentGenerationL.setText(Globals.generationsList.get(Globals.currentGen).toString());
 		highestSeries.getData().add(new XYChart.Data(Globals.currentGen,Globals.generationsList.get(Globals.currentGen).getFitnesss()[0]));
 		lowestSeries.getData().add(new XYChart.Data(Globals.currentGen,Globals.generationsList.get(Globals.currentGen).getFitnesss()[1]));
 		averageSeries.getData().add(new XYChart.Data(Globals.currentGen,Globals.generationsList.get(Globals.currentGen).getFitnesss()[2]));
-		bestCreatureLV.getItems().clear();
-		bestCreatureLV.getItems().setAll(Globals.creaturesHashMap.get(Globals.generationsList.get(Globals.currentGen).getImportantCretures()[0]));
 		
+		bestCreatureLV.getItems().setAll(Globals.creaturesHashMap.get(Globals.generationsList.get(Globals.currentGen).getImportantCretures()[0]));
 		Globals.currentGen++;
 	}
 	public void generateMultiple(ActionEvent event){
 		for(int i=0;i<Integer.parseInt(multipleGenerationsTF.getText());i++){
 			generate(event);
+		}
+	}
+	
+	public void saveGeneration(){
+		try {
+			file= fileDialog.showSaveDialog(myController.getScene().getWindow());
+			Globals.generationsList.get(Globals.currentGen).printGeneration(false, new FileOutputStream(file));
+		} catch ( IOException e) {
+			e.printStackTrace();
 		}
 	}
 	
@@ -70,7 +91,7 @@ public class PopulationGenControl implements Initializable, ControlledScene{
 	@FXML AreaChart<Number, Double> generationsAC; 
 	
 
-	//Generations Database tab
+	//------------------------------Generations Database tab------------------------------
 	public void setGenerationInfo(Generation generation){
 		totalCreaturesL.setText(String.valueOf(Globals.maxCreatures));
 		highestFitL.setText(String.valueOf(Utilities.Round(generation.getFitnesss()[0])));
@@ -97,6 +118,7 @@ public class PopulationGenControl implements Initializable, ControlledScene{
 		deathChanceL.setText(String.valueOf(creature.getGenes()[6]));
 		lifespanMultiplierL.setText(String.valueOf(creature.getGenes()[7]));
 	}
+	
 	ChangeListener<Generation> selectedGeneration = new ChangeListener<Generation>() {
 		@Override
 		public void changed(ObservableValue<? extends Generation> observable, Generation oldValue,Generation newValue) {
@@ -108,14 +130,15 @@ public class PopulationGenControl implements Initializable, ControlledScene{
 	ChangeListener<Creature> selectedCreature = new ChangeListener<Creature>() {
 		@Override
 		public void changed(ObservableValue<? extends Creature> observable, Creature oldValue,Creature newValue) {
-			try {
+			if(newValue != null){
 				setCreatureInfo(newValue);
-			} catch (Exception e) {
-				// TODO: handle exception
 			}
-			
 		}
 	};
+	
+	@FXML Tab generationsDataTab;
+	@FXML ListView<Generation> generationsLV;
+	@FXML ListView<Creature> creaturesLV;
 	
 	@FXML Label uidL;
 	@FXML Label ageL;
@@ -139,24 +162,41 @@ public class PopulationGenControl implements Initializable, ControlledScene{
 	@FXML Label averageCreatureL;
 	@FXML Label worstCreatureL;
 	
+	//------------------------------Creatures Database tab------------------------------
+
+	
+	@FXML Tab creaturesDataTab;
+	@FXML ListView<Creature> allCreaturesLV;
+	
+	@FXML Label uidL2;
+	@FXML Label ageL2;
+	@FXML Label fitnessL2;
+	@FXML Label parent1L2;
+	@FXML Label parent2L2;
+	@FXML Label limbsL2;
+	@FXML Label legsL2;
+	@FXML Label armsL2;
+	@FXML Label mutationChanceL2;
+	@FXML Label HeightMultiplierL2;
+	@FXML Label weightMultiplierL2;
+	@FXML Label deathChanceL2;
+	@FXML Label lifespanMultiplierL2;
+	
 	//General things
 	public void exit(ActionEvent event){
 		myController.setScene(MainStage.mainMenuID);
 	}
-	
-	@FXML ListView<Generation> generationsLV;
-	@FXML ListView<Creature> creaturesLV;
 	
 	@Override
 	public void setSceneParent(ScenesController sceneParent) {
 		myController = sceneParent;
 	}
 	
-	@SuppressWarnings("unchecked")
+
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		Globals.generationsList = new ArrayList <Generation>();
-		Globals.creaturesHashMap = new HashMap<Integer,Creature>();
+		Globals.generationsList = FXCollections.observableArrayList();
+		Globals.creaturesHashMap = FXCollections.observableHashMap();
 		generationsLV.getSelectionModel().selectedItemProperty().addListener(selectedGeneration);
 		creaturesLV.getSelectionModel().selectedItemProperty().addListener(selectedCreature);
 		highestSeries.setName("Highest Fitness");
@@ -165,7 +205,32 @@ public class PopulationGenControl implements Initializable, ControlledScene{
 		generationsLC.getData().add(highestSeries);
 		generationsLC.getData().add(lowestSeries);
 		generationsLC.getData().add(averageSeries);
+		
+		bestCreatureLV.setOnMouseClicked(new EventHandler<MouseEvent>(){
+
+			@Override
+			public void handle(MouseEvent event) {
+				populationGenTabPane.getSelectionModel().select(generationsDataTab);
+				generationsLV.getSelectionModel().select(Globals.currentGen-1);
+				creaturesLV.getSelectionModel().select(bestCreatureLV.getSelectionModel().getSelectedItem());
+				setCreatureInfo(bestCreatureLV.getSelectionModel().getSelectedItem());
+			}
+			
+		});
+		Globals.creaturesHashMap.addListener((MapChangeListener.Change<? extends Integer, ? extends Creature> hashMapChange) -> {
+			if (hashMapChange.wasAdded()) {
+				allCreaturesLV.getItems().add(hashMapChange.getValueAdded());
+            }
+		});
+		Globals.generationsList.addListener((ListChangeListener.Change<? extends Generation> listChange) -> {
+			listChange.next();
+			if (listChange.wasAdded()) {
+				generationsLV.getItems().addAll(listChange.getAddedSubList());
+            }
+		});
+		
 	} 
 
+	@FXML TabPane populationGenTabPane;
 	
 }
